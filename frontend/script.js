@@ -50,7 +50,7 @@ document.querySelector("#addCity").addEventListener("click", function (event) {
     return;
   }
 
-  fetch("https://wheather-app-chi-nine.vercel.app/weather", {
+  fetch("https://wheather-app-chi-nine.vercel.app/weather", {  
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ cityName }),
