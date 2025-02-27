@@ -2,7 +2,7 @@
 console.log("Script JavaScript chargé");
 
 // 📌 CHARGER LES DONNÉES MÉTÉO
-fetch("http://localhost:3000/weather")
+fetch("https://wheather-app-chi-nine.vercel.app/weather")
   .then((response) => response.json())
   .then((data) => {
     if (data.weather) {
@@ -28,7 +28,7 @@ fetch("http://localhost:3000/weather")
 function updateDeleteCityEventListener() {
   document.querySelectorAll(".deleteCity").forEach((button) => {
     button.addEventListener("click", function () {
-      fetch(`http://localhost:3000/weather/${this.id}`, { method: "DELETE" })
+      fetch(`https://wheather-app-chi-nine.vercel.app/weather/${this.id}`, { method: "DELETE" })
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {
@@ -50,7 +50,7 @@ document.querySelector("#addCity").addEventListener("click", function (event) {
     return;
   }
 
-  fetch("http://localhost:3000/weather", {
+  fetch("https://wheather-app-chi-nine.vercel.app/weather", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ cityName }),
