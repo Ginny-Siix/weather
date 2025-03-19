@@ -13,7 +13,7 @@ document.querySelector("#signup").addEventListener("click", function () {
 
   console.log("Données envoyées :", user); // Vérifie que les données sont envoyées
 
-  fetch("weather-evt5tsu20-ginny-siixs-projects.vercel.app/users/signup", {
+  fetch("https://weather-eight-rho-40.vercel.app/users/signup", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user),
@@ -36,7 +36,7 @@ document.querySelector("#signin").addEventListener("click", function () {
 
   console.log("Données envoyées :", user); // Vérifie les données envoyées
 
-  fetch("weather-evt5tsu20-ginny-siixs-projects.vercel.app/users/signin", {
+  fetch("https://weather-eight-rho-40.vercel.app/users/signin", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user),
