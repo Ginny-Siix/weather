@@ -116,17 +116,54 @@ document.querySelector("#addCity").addEventListener("click", function (event) {
     });
 });
 
+// Fonction pour afficher un message
 function showMessage(message, isSuccess) {
   const messageBox = document.querySelector("#messageBox");
   if (!messageBox) {
-      console.error("❌ Erreur : #messageBox n'existe pas dans le DOM !");
-      return;
+    console.error("❌ Erreur : #messageBox n'existe pas dans le DOM !");
+    return;
   }
+
+  if (typeof message === 'undefined' || message === null || message === '') {
+    console.error("❌ Erreur : message indéfini ou vide !");
+    message = "❌ Erreur inconnue.";
+  }
+
   messageBox.innerText = message;
   messageBox.style.color = isSuccess ? "green" : "red";
   messageBox.style.display = "block";
 
   setTimeout(() => {
-      messageBox.style.display = "none";
+    messageBox.style.display = "none";
   }, 3000);
 }
+
+// Exemple de gestion d'erreur
+fetch("https://weather-eight-rho-40.vercel.app/weather")
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.weather) {
+      data.weather.forEach((city) => {
+        console.log("Ajout de la ville :", city.cityName);
+        document.querySelector("#cityList").innerHTML += `
+          <div class="cityContainer">
+            <p class="name">${city.cityName}</p>
+            <p class="description">${city.description}</p>
+            <img class="weatherIcon" src="images/${city.main}.png"/>
+            <div class="temperature">
+              <p class="tempMin">${city.tempMin}°C</p>
+              <span>-</span>
+              <p class="tempMax">${city.tempMax}°C</p>
+            </div>
+            <button class="deleteCity" id="${city.cityName}">Delete</button>
+          </div>`;
+      });
+      updateDeleteCityEventListener();
+    } else {
+      showMessage("❌ Données météo manquantes ou mal formatées", false);
+    }
+  })
+  .catch((error) => {
+    console.error("Erreur lors de la requête :", error);
+    showMessage("❌ Erreur serveur", false);
+  });
