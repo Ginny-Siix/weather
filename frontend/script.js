@@ -76,21 +76,16 @@ document.querySelector("#addCity").addEventListener("click", function (event) {
     return;
   }
 
-  fetch("https://weather-eight-rho-40.vercel.app/weather", {  
+  fetch("https://weather-eight-rho-40.vercel.app/weather", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ cityName }),
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Erreur serveur : ${response.status}`);
-      }
-      return response.json();
-    })
+    .then((response) => response.json())
     .then((data) => {
-      console.log("Réponse après ajout :", data);
-      if (data.result && Array.isArray(data.weather) && data.weather.length > 0) { 
-        const city = data.weather[0];
+      console.log("Réponse après ajout :", data); // Debug
+      if (data.result && Array.isArray(data.weather) && data.weather.length > 0) {
+        const city = data.weather[0]; // Si la réponse est un tableau, on prend le premier élément
         document.querySelector("#cityList").innerHTML += `
           <div class="cityContainer">
             <p class="name">${city.cityName}</p>
@@ -107,14 +102,15 @@ document.querySelector("#addCity").addEventListener("click", function (event) {
         document.querySelector("#cityNameInput").value = "";
         showMessage("✅ Ville ajoutée avec succès !", true);
       } else {
-        showMessage("❌ Erreur : " + data.error, false);
+        showMessage("❌ Erreur : " + (data.error || 'Réponse mal formatée'), false);
       }
     })
     .catch((error) => {
       console.error("Erreur lors de l’ajout de la ville:", error);
       showMessage("❌ Erreur serveur", false);
-    });
-});
+    }); // Fin du bloc fetch
+  
+}); // Fin du listener pour #addCity
 
 // Fonction pour afficher un message
 function showMessage(message, isSuccess) {
@@ -136,34 +132,4 @@ function showMessage(message, isSuccess) {
   setTimeout(() => {
     messageBox.style.display = "none";
   }, 3000);
-}
-
-// Exemple de gestion d'erreur
-fetch("https://weather-eight-rho-40.vercel.app/weather")
-  .then((response) => response.json())
-  .then((data) => {
-    if (data.weather) {
-      data.weather.forEach((city) => {
-        console.log("Ajout de la ville :", city.cityName);
-        document.querySelector("#cityList").innerHTML += `
-          <div class="cityContainer">
-            <p class="name">${city.cityName}</p>
-            <p class="description">${city.description}</p>
-            <img class="weatherIcon" src="images/${city.main}.png"/>
-            <div class="temperature">
-              <p class="tempMin">${city.tempMin}°C</p>
-              <span>-</span>
-              <p class="tempMax">${city.tempMax}°C</p>
-            </div>
-            <button class="deleteCity" id="${city.cityName}">Delete</button>
-          </div>`;
-      });
-      updateDeleteCityEventListener();
-    } else {
-      showMessage("❌ Données météo manquantes ou mal formatées", false);
-    }
-  })
-  .catch((error) => {
-    console.error("Erreur lors de la requête :", error);
-    showMessage("❌ Erreur serveur", false);
-  });
+} // Fin de la fonction showMessage
