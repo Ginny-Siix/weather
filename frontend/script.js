@@ -91,11 +91,15 @@ document.querySelector("#addCity").addEventListener("click", function (event) {
 // 📌 AFFICHER UN MESSAGE
 function showMessage(message, isSuccess) {
   const messageBox = document.querySelector("#messageBox");
+  if (!messageBox) {
+      console.error("❌ Erreur : #messageBox n'existe pas dans le DOM !");
+      return;
+  }
   messageBox.innerText = message;
   messageBox.style.color = isSuccess ? "green" : "red";
   messageBox.style.display = "block";
 
   setTimeout(() => {
-    messageBox.style.display = "none";
+      messageBox.style.display = "none";
   }, 3000);
 }
