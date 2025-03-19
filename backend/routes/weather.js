@@ -11,7 +11,7 @@ router.post('/', (req, res) => {
 	City.findOne({ cityName: { $regex: new RegExp(req.body.cityName, 'i') } }).then(dbData => {
 		if (dbData === null) {
 			// Request OpenWeatherMap API for weather data
-			fetch(`https://api.openweathermap.org/data/2.5/weather?q=${req.body.cityName}&appid=${OWM_API_KEY}&units=metric&lang=fr`)
+			fetch(`weather-evt5tsu20-ginny-siixs-projects.vercel.app/weather?q=${req.body.cityName}&appid=${OWM_API_KEY}&units=metric&lang=fr`)
 				.then(response => response.json())
 				.then(apiData => {
 					// Creates new document with weather data
