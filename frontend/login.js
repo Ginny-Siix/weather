@@ -8,12 +8,6 @@ document.querySelector("#signup").addEventListener("click", function () {
 
   console.log("Données envoyées :", user); // Vérifie que les données sont envoyées
 
-  // Vérification simple des champs
-  if (!user.name || !user.email || !user.password) {
-    showMessage("❌ Veuillez remplir tous les champs.", false);
-    return;
-  }
-
   fetch("https://weather-eight-rho-40.vercel.app/users/signup", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -23,15 +17,14 @@ document.querySelector("#signup").addEventListener("click", function () {
     .then((data) => {
       console.log("Réponse du serveur:", data);
       if (data.result) {
-        showMessage("✅ Inscription réussie !", true);
-        window.location.assign("index.html"); // Redirection vers la page principale après inscription
+        showMessage("✅ Inscription réussie ! Vous pouvez maintenant vous connecter.", true);
       } else {
-        showMessage("❌ Erreur lors de l'inscription.", false);
+        showMessage("❌ Erreur lors de l'inscription. Veuillez vérifier vos informations.", false);
       }
     })
     .catch((error) => {
-      console.error("Erreur:", error);
-      showMessage("❌ Erreur serveur, veuillez réessayer.", false);
+      console.error("Erreur lors de l'inscription:", error);
+      showMessage("❌ Erreur serveur", false);
     });
 });
 
@@ -44,12 +37,6 @@ document.querySelector("#signin").addEventListener("click", function () {
 
   console.log("Données envoyées :", user); // Vérifie les données envoyées
 
-  // Vérification simple des champs
-  if (!user.email || !user.password) {
-    showMessage("❌ Veuillez remplir tous les champs.", false);
-    return;
-  }
-
   fetch("https://weather-eight-rho-40.vercel.app/users/signin", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -59,29 +46,25 @@ document.querySelector("#signin").addEventListener("click", function () {
     .then((data) => {
       console.log("Réponse du serveur:", data); // Vérifie la réponse du serveur
       if (data.result) {
-        showMessage("✅ Connexion réussie !", true);
-        window.location.assign("index.html"); // Redirection vers la page principale après connexion
+        // Afficher le message de succès
+        showMessage("✅ Vous êtes connecté !", true);
       } else {
-        showMessage("❌ Email ou mot de passe incorrect.", false);
+        // Afficher un message d'erreur
+        showMessage("❌ Erreur de connexion. Veuillez vérifier vos informations.", false);
       }
     })
     .catch((error) => {
-      console.error("Erreur:", error);
-      showMessage("❌ Erreur serveur, veuillez réessayer.", false);
+      console.error("Erreur lors de la connexion:", error);
+      showMessage("❌ Erreur serveur", false);
     });
 });
 
-// Fonction pour afficher un message à l'utilisateur
+// Fonction pour afficher un message
 function showMessage(message, isSuccess) {
   const messageBox = document.querySelector("#messageBox");
   if (!messageBox) {
     console.error("❌ Erreur : #messageBox n'existe pas dans le DOM !");
     return;
-  }
-
-  if (typeof message === 'undefined' || message === null || message === '') {
-    console.error("❌ Erreur : message indéfini ou vide !");
-    message = "❌ Erreur inconnue.";
   }
 
   messageBox.innerText = message;
@@ -90,5 +73,5 @@ function showMessage(message, isSuccess) {
 
   setTimeout(() => {
     messageBox.style.display = "none";
-  }, 3000);
+  }, 3000); // Le message disparait après 3 secondes
 }
