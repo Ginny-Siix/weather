@@ -2,7 +2,7 @@
 console.log("Script JavaScript chargé");
 
 // 📌 CHARGER LES DONNÉES MÉTÉO
-fetch("weather-evt5tsu20-ginny-siixs-projects.vercel.app/weather")
+fetch("https://weather-evt5tsu20-ginny-siixs-projects.vercel.app/weather")
   .then((response) => response.json())
   .then((data) => {
     if (data.weather) {
@@ -28,7 +28,7 @@ fetch("weather-evt5tsu20-ginny-siixs-projects.vercel.app/weather")
 function updateDeleteCityEventListener() {
   document.querySelectorAll(".deleteCity").forEach((button) => {
     button.addEventListener("click", function () {
-      fetch(`weather-evt5tsu20-ginny-siixs-projects.vercel.app/weather/${this.id}`, { method: "DELETE" })
+      fetch(`https://weather-evt5tsu20-ginny-siixs-projects.vercel.app/weather/${this.id}`, { method: "DELETE" })
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {
@@ -51,7 +51,7 @@ document.querySelector("#addCity").addEventListener("click", function (event) {
   }
 
   
-  fetch("weather-evt5tsu20-ginny-siixs-projects.vercel.app/weather", {  
+  fetch("https://weather-evt5tsu20-ginny-siixs-projects.vercel.app/weather", {  
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ cityName }),
