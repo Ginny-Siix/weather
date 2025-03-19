@@ -83,8 +83,12 @@ document.querySelector("#addCity").addEventListener("click", function (event) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Réponse après ajout :", data); // Debug
-      if (data.result && Array.isArray(data.weather) && data.weather.length > 0) {
+      console.log("Réponse après ajout :", data);
+
+      // Afficher la réponse brute de l'API pour débogage
+      console.log("Réponse brute de l'API :", data);
+
+      if (data.weather && Array.isArray(data.weather) && data.weather.length > 0) {
         const city = data.weather[0]; // Si la réponse est un tableau, on prend le premier élément
         document.querySelector("#cityList").innerHTML += `
           <div class="cityContainer">
@@ -108,8 +112,7 @@ document.querySelector("#addCity").addEventListener("click", function (event) {
     .catch((error) => {
       console.error("Erreur lors de l’ajout de la ville:", error);
       showMessage("❌ Erreur serveur", false);
-    }); // Fin du bloc fetch
-  
+    });
 }); // Fin du listener pour #addCity
 
 // Fonction pour afficher un message
