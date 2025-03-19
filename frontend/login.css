@@ -76,3 +76,12 @@ button {
 	background-color: transparent !important;
 	border: none;
 }
+
+#messageBox {
+	display: none; 
+	padding: 10px; 
+	background-color: #f0f0f0; 
+	border-radius: 5px; 
+	margin-top: 10px; 
+	font-size: 16px
+}
